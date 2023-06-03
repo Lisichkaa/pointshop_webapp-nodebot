@@ -28,8 +28,7 @@ bot.on(message, async (msg) => {
 
 bot.launch();
 
-app.post("/web-data", (req, res) => {
-  
+app.post("/web-data", (req, res) => {  
   const {queryId} = req.body;
   try {
     bot.answerWebAppQuery(queryId, {
