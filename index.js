@@ -32,9 +32,9 @@ app.post("/web-data", (req, res) => {
   const {queryId} = req.body;
   try {
     bot.answerWebAppQuery(queryId, {
-      type: 'article',
+      type: "article",
       id: queryId,
-      title: 'Успешная покупка',
+      title: "Успешная покупка",
       input_message_content: {
       message_text: "Поздравляю с покупкой очков"
     },
@@ -45,5 +45,5 @@ app.post("/web-data", (req, res) => {
   }
 })
 
-const PORT = 4000;
+const PORT = 3000;
 app.listen(PORT, () => console.log('server started on PORT ' + PORT))
