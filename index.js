@@ -14,7 +14,7 @@ app.use(cors());
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const text = msg.text;
-
+    await bot.sendMessage(chatId, 'hello')
     if(text === '/start') {
         await bot.sendMessage(chatId, 'Заходи в наш интернет магазин по кнопке ниже', {
             reply_markup: {
