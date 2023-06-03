@@ -6,7 +6,6 @@ const { message } = require('telegraf/filters');
 const TOKEN = "6165869458:AAGDyfd9C7VAIPKvNxEuOccq8adzJWjXzqE";
 const bot = new Telegraf(TOKEN);
 
-//const web_link = "https://cheery-lokum-f67b11.netlify.app/";
 const web_link = "https://tiny-cobbler-781dee.netlify.app/";
 
 const app = express();
@@ -29,23 +28,23 @@ bot.on(message, async (msg) => {
 
 bot.launch();
 
-app.post('/web-data', async (req, res) => {
+app.post("/web-data", (req, res) => {
   
   const {queryId} = req.body;
   try {
-      await bot.telegram.answerWebAppQuery(queryId, {
-          type: 'article',
-          id: queryId,
-          title: 'Успешная покупка',
-          input_message_content: {
-              message_text: "Поздравляю с покупкой очков"
-          },
-      });
-      return res.status(200).json({});
+    bot.answerWebAppQuery(queryId, {
+      type: 'article',
+      id: queryId,
+      title: 'Успешная покупка',
+      input_message_content: {
+      message_text: "Поздравляю с покупкой очков"
+    },
+  });
+  return res.status(200).json({});
   } catch (e) {
-      return res.status(500).json({})
+    return res.status(500).json({})
   }
 })
 
-const PORT = 8000;
+const PORT = 4000;
 app.listen(PORT, () => console.log('server started on PORT ' + PORT))
