@@ -24,7 +24,7 @@ bot.start((ctx) =>
 bot.on(message, async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
-  await bot.sendMessage(chatId, "[eq")
+  await bot.sendMessage("[eq")
 });
 
 app.post('/web-data', async (req, res) => {
