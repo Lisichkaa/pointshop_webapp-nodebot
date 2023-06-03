@@ -26,6 +26,7 @@ bot.on(message, async (msg) => {
   const text = msg.text;
   await bot.sendMessage(chatId, "[eq")
 });
+
 app.post('/web-data', async (req, res) => {
   const {queryId, products = []} = req.body;
   try {
@@ -45,5 +46,3 @@ app.post('/web-data', async (req, res) => {
 
 const PORT = 8000;
 app.listen(PORT, () => console.log('server started on PORT ' + PORT))
-
-bot.launch(); 
