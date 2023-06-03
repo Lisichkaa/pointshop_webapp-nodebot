@@ -27,7 +27,10 @@ bot.on(message, async (msg) => {
   await msg.sendMessage("[eq")
 });
 
+bot.launch();
+
 app.post('/web-data', async (req, res) => {
+  
   const {queryId} = req.body;
   try {
       await bot.telegram.answerWebAppQuery(queryId, {
@@ -35,9 +38,9 @@ app.post('/web-data', async (req, res) => {
           id: queryId,
           title: 'Успешная покупка',
           input_message_content: {
-              message_text: ` Поздравляю с покупкой очков`
-          }
-      })
+              message_text: "Поздравляю с покупкой очков"
+          },
+      });
       return res.status(200).json({});
   } catch (e) {
       return res.status(500).json({})
@@ -46,5 +49,3 @@ app.post('/web-data', async (req, res) => {
 
 const PORT = 8000;
 app.listen(PORT, () => console.log('server started on PORT ' + PORT))
-
-bot.launch();
