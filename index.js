@@ -35,7 +35,7 @@ app.post('/web-data', async (req, res) => {
           id: queryId,
           title: 'order create',
           input_message_content: {
-              message_text: ` Поздравляю с покупкой, вы хотите получить ${totalAmount} очков, ${products.map(item => item.title).join(', ')}`
+              message_text: ` Поздравляю с покупкой, вы хотите получить ${totalAmount} очков, ${products.map(item => item.amount).join(', ')}`
           }
       })
       return res.status(200).json({});
