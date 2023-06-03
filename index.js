@@ -1,49 +1,56 @@
+const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const cors = require('cors');
 
-const { Telegraf } = require("telegraf");
-const { message } = require('telegraf/filters');
-const TOKEN = "6165869458:AAGDyfd9C7VAIPKvNxEuOccq8adzJWjXzqE";
-const bot = new Telegraf(TOKEN);
+const token = "6165869458:AAGDyfd9C7VAIPKvNxEuOccq8adzJWjXzqE";
+const webAppUrl = "https://tiny-cobbler-781dee.netlify.app/";
 
-const web_link = "https://tiny-cobbler-781dee.netlify.app/";
-
+const bot = new TelegramBot(token, {polling: true});
 const app = express();
+
 app.use(express.json());
 app.use(cors());
 
-bot.start((ctx) =>
-  ctx.reply("Lisichka Shop!))))", {
-    reply_markup: {
-      inline_keyboard: [[{ text: "shop", web_app: { url: web_link } }]],
-    },
-  })
-);
+bot.on('message', async (msg) => {
+    const chatId = msg.chat.id;
+    const text = msg.text;
 
-bot.on(message, async (msg) => {
-  const chatId = msg.chat.id;
-  const text = msg.text;
-  await msg.sendMessage("[eq")
-});
+    if(text === '/start') {
+        await bot.sendMessage(chatId, 'Ниже появится кнопка, заполни форму', {
+            reply_markup: {
+                keyboard: [
+                    [{text: 'Заполнить форму', web_app: {url: webAppUrl + '/form'}}]
+                ]
+            }
+        })
 
-bot.launch();
-
-app.post("/web-data", (req, res) => {  
-  const {queryId} = req.body;
-  try {
-    bot.answerWebAppQuery(queryId, {
-      type: "article",
-      id: queryId,
-      title: "Успешная покупка",
-      input_message_content: {
-      message_text: "Поздравляю с покупкой очков"
-    },
+        await bot.sendMessage(chatId, 'Заходи в наш интернет магазин по кнопке ниже', {
+            reply_markup: {
+                inline_keyboard: [
+                    [{text: 'Сделать заказ', web_app: {url: webAppUrl}}]
+                ]
+            }
+        })
+    }
   });
-  return res.status(200).json({});
-  } catch (e) {
-    return res.status(500).json({})
-  }
+
+app.post('/web-data', async (req, res) => {
+    const {queryId} = req.body;
+    try {
+        await bot.answerWebAppQuery(queryId, {
+            type: 'article',
+            id: queryId,
+            title: 'Успешная покупка',
+            input_message_content: {
+                message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму`
+            }
+        })
+        return res.status(200).json({});
+    } catch (e) {
+        return res.status(500).json({})
+    }
 })
 
-const PORT = 3000;
+const PORT = 8000;
+
 app.listen(PORT, () => console.log('server started on PORT ' + PORT))
