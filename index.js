@@ -24,13 +24,13 @@ bot.start((ctx) =>
 bot.on(message, async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
-  await bot.sendMessage("[eq")
+  await msg.sendMessage("[eq")
 });
 
 app.post('/web-data', async (req, res) => {
   const {queryId} = req.body;
   try {
-      await bot.answerWebAppQuery(queryId, {
+      await bot.telegram.answerWebAppQuery(queryId, {
           type: 'article',
           id: queryId,
           title: 'Успешная покупка',
