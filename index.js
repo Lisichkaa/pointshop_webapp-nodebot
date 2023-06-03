@@ -24,18 +24,17 @@ bot.start((ctx) =>
 bot.on(message, async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
-  msg.sendMessage("[eq")
+  await bot.sendMessage(chatId, "[eq")
 });
-
 app.post('/web-data', async (req, res) => {
-  const {queryId, products = [], totalAmount} = req.body;
+  const {queryId, products = []} = req.body;
   try {
       await bot.answerWebAppQuery(queryId, {
           type: 'article',
           id: queryId,
-          title: 'order create',
+          title: 'Успешная покупка',
           input_message_content: {
-              message_text: ` Поздравляю с покупкой, вы хотите получить ${totalAmount} очков, ${products.map(item => item.amount).join(', ')}`
+              message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму, ${products.map(item => item.amount).join(', ')}`
           }
       })
       return res.status(200).json({});
